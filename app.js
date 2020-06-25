@@ -9,12 +9,15 @@ const cors = require("cors");
 const mongoose = require('mongoose')
 
 
+
 // Connecting to the Mongo Atlas database                                         
 mongoose.connect('mongodb+srv://**:**@node-rest-shop-7baom.mongodb.net/test?retryWrites=true&w=majority',
     { useNewUrlParser: true })
 
 mongoose.Promise = global.Promise;
 
+// Handling CORS errors and OPTIONS requests
+app.use(cors());
 app.set('view engine', 'ejs')
 
 // Set up body parser and Morgan, other middlewear
@@ -24,9 +27,6 @@ app.use(morgan('dev'));
 app.use('/uploads', express.static('uploads'))
 app.use(express.static('public'))
 app.use(express.static('public/build'))
-
-// Handling CORS errors and OPTIONS requests
-app.use(cors());
 
 // Setting up the routes
 app.use("/products", productRoutes);
